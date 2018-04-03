@@ -29,6 +29,18 @@ class Str
 		return strlen($this->activeText);
 	}
 
+	public function ltrim($character_mask)
+	{
+		$this->activeText = ltrim(this->activeText, $character_mask);
+		return $this;
+	}
+
+	public function rtrim($character_mask)
+	{
+		$this->activeText = rtrim(this->activeText, $character_mask);
+		return $this;
+	}
+
 	public function trim()
 	{
 		$this->activeText = trim($this->activeText);
@@ -38,6 +50,11 @@ class Str
 	public function strip() {
 		// This is only a wrapper method
 		return $this->trim();
+	}
+
+	public function lines()
+	{
+		return explode("\n", $this->activeText);
 	}
 
 	public function reset()
@@ -75,6 +92,13 @@ class Str
 		$this->activeText = implode('', $outputArray);
 		return $this;
 	}
+
+	public function chars()
+	{
+		return str_split($this->activeText);
+	}
+
+	public function 
 
 }
 
