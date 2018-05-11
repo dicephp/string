@@ -170,6 +170,33 @@ class Str
 	    return explode((String)$delimiter, $this->activeText);
     }
 
+    public function substring($startIndex, $length = null) {
+        if($this->length() - 1 > (int)$startIndex){
+            return null;
+        }
+
+        if($length === null) {
+            return $this->activeText[$startIndex];
+        } elseif ($length > 0) {
+
+        }
+
+    }
+
+    public function chomp() {}
+    public function chop() {}
+    public function isEmpty() {}
+    public function contains() {}
+    public function startsWith() {}
+    public function endsWith() {}
+    public function isEqualTo() {}
+    public function reverse() {}
+    public function lJust() {}
+    public function rJust() {}
+    public function partition() {}
+    public function slice() {}
+    public function squeeze() {}
+
 }
 
 $obj = new Str(" Vaibhav Kaushal ");
