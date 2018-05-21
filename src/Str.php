@@ -1,5 +1,7 @@
 <?php
 
+namespace Dice\Types ;
+
 /**
 * Str: A near-natural Ruby-like String Implementation
 */
@@ -277,12 +279,38 @@ class Str
         return $needle === "" || strpos($this->activeText, $needle, strlen($this->activeText) - strlen($needle)) !== false;
     }
 
-    public function isEqualTo()
+    /**
+     * Compares and tells if this string is equal in length and content
+     * @param $stringToCompare String which is to be compared
+     * @return bool
+     */
+    public function isEqualTo($stringToCompare)
     {
-
+        if ($this->activeText === (String)$stringToCompare) {
+            return true;
+        }
+        return false;
     }
-    public function reverse() {}
-    public function lJust() {}
+
+    /**
+     * Reverses the string and stores it
+     * @return Str
+     */
+    public function reverse()
+    {
+        $this->activeText = strrev($this->activeText);
+        return $this;
+    }
+
+    /**
+     * Justifies string to left with optional padding (default is space) to its right
+     * @param int $finalLength Final length of the string needed after justification
+     * @param string $strPadding Repeating padding string to be applied to the right (default = ' ')
+     */
+    public function lJust($finalLength, $strPadding = ' ')
+    {
+        // TODO: Implement this
+    }
     public function rJust() {}
     public function partition() {}
     public function slice() {}
