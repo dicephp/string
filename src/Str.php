@@ -12,6 +12,9 @@ class Str
 	 */
 	protected $originalText;
 
+    /**
+     * @var String Active value, used for chaining
+     */
 	protected $activeText;
 
     /**
@@ -306,37 +309,117 @@ class Str
      * Justifies string to left with optional padding (default is space) to its right
      * @param int $finalLength Final length of the string needed after justification
      * @param string $strPadding Repeating padding string to be applied to the right (default = ' ')
+     * @return Str
      */
     public function lJust($finalLength, $strPadding = ' ')
     {
-        // TODO: Implement this
+        // If the final length is not more than the existing length, do nothing
+        if((int)$finalLength <= 0 || $this->length() >=  $finalLength) {
+            return $this;
+        }
+
+        // Calculate the difference between requested length and current length
+        // and then iterate padding string just enough number of times, with the last one
+        // optionally being a substring (from the beginning) of the Padding string
+        $lenDiff = $finalLength - $this->length();
+
+        while($lenDiff > strlen($strPadding)) {
+            $this->activeText .= $strPadding;
+            $lenDiff = $finalLength - $this->length();
+        }
+
+        $this->activeText = $this->activeText . (substr($strPadding, 0, ($finalLength - strlen($this->activeText))));
+        return $this;
     }
-    public function rJust() {}
+
+    /**
+     * Justifies string to left with optional padding (default is space) to its right
+     * @param int $finalLength Final length of the string needed after justification
+     * @param string $strPadding Repeating padding string to be applied to the left (default = ' ')
+     * @return Str
+     */
+    public function rJust($finalLength, $strPadding = ' ')
+    {
+        // If the final length is not more than the existing length, do nothing
+        if((int)$finalLength <= 0 || $this->length() >=  $finalLength) {
+            return $this;
+        }
+
+        // Calculate the difference between requested length and current length
+        // and then iterate padding string just enough number of times, with the last one
+        // optionally being a substring (from the beginning) of the Padding string
+        $lenDiff = $finalLength - $this->length();
+
+        $strToAdd = '';
+
+        while($lenDiff > strlen($strPadding)) {
+            $strToAdd = $strPadding . $strToAdd;
+            $lenDiff = $finalLength - ($this->length() + strlen($strToAdd));
+        }
+
+        $this->activeText = $strToAdd . (substr($strPadding, 0, ($finalLength - (strlen($this->activeText) + strlen($strToAdd))))) . $this->activeText;
+
+        return $this;
+    }
+
+    public function getFirstCharacter() {}
+    public function getLastCharacter() {}
     public function partition() {}
     public function slice() {}
     public function squeeze() {}
+    public function truncate() {}
+    public function xmlEscape() {}
+    public function getLongestCommonSubsequenceWith($otherString) {}
+    public function base64Encode($urlSafe = false) {}
+    public function base64Decode($urlSafe = false) {}
+    public function getAsSlug() {}
+    public function removeAccents() {}
+    public function isUtf8() {}
+
+    /**
+     * Magic method for retrieving original or active string
+     * @param $name
+     * @return String
+     * @throws \Exception
+     */
+    public function __get($name)
+    {
+        switch($name) {
+            case 'originalString':
+                return $this->originalText;
+            case 'activeString':
+                return $this->activeText;
+            default:
+                throw new \Exception('Invalid property requested', 1);
+        }
+    }
 
 }
 
 $obj = new Str(" Vaibhav Kaushal ");
-echo "\nlength: " . $obj->length();
-echo "\nstring cast: '" . $obj . "'";
-echo "\ntrim: '" . $obj->trim() . "'";;
-echo "\nlength after trimming: " . $obj->length();
-echo "\nbefore reset: '" . $obj . "'";
-echo "\ncalling reset: '" . $obj->reset() . "'";
-echo "\ntrimming again: '" . $obj->trim() . "'";
-echo "\ntoggle case: '" . $obj->togglecase() . "'";
-echo "\ntoggle case again: '" . $obj->togglecase() . "'";
-echo "\ndowncasing: '" . $obj->downcase() . "'";
-echo "\nupcasing: '" . $obj->upcase() . "'";
-echo "\ncalling reset: '" . $obj->reset() . "'";
-echo "\ncalling chain (trim-upcase-togglecase): '" . $obj->trim()->upcase()->togglecase() . "'";
-
-echo "\n============";
-echo "\ncalling trim again: '" . $obj->trim() . "'";
-echo "\ncalling append: '" . $obj->append(' is a good boy') . "'";
-echo "\ncalling prepend: '" . $obj->prepend('Actually, ') . "'";
-
+//echo "\nlength: " . $obj->length();
+//echo "\nstring cast: '" . $obj . "'";
+//echo "\ntrim: '" . $obj->trim() . "'";;
+//echo "\nlength after trimming: " . $obj->length();
+//echo "\nbefore reset: '" . $obj . "'";
+//echo "\ncalling reset: '" . $obj->reset() . "'";
+//echo "\ntrimming again: '" . $obj->trim() . "'";
+//echo "\ntoggle case: '" . $obj->togglecase() . "'";
+//echo "\ntoggle case again: '" . $obj->togglecase() . "'";
+//echo "\ndowncasing: '" . $obj->downcase() . "'";
+//echo "\nupcasing: '" . $obj->upcase() . "'";
+//echo "\ncalling reset: '" . $obj->reset() . "'";
+//echo "\ncalling chain (trim-upcase-togglecase): '" . $obj->trim()->upcase()->togglecase() . "'";
+//
+//echo "\n============";
+//echo "\ncalling trim again: '" . $obj->trim() . "'";
+//echo "\ncalling append: '" . $obj->append(' is a good boy') . "'";
+//echo "\ncalling prepend: '" . $obj->prepend('Actually, ') . "'";
+//
+//echo "\n============";
+//echo "\ncalling reset: '" . $obj->reset() . "'";
+echo "\ncalling ljust: '" . $obj->lJust(25, '1234567890') . "'";
+$obj->reset();
+echo "\ncalling rjust: '" . $obj->rJust(25, '1234567890') . "'";
 
 echo "\n";
