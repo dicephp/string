@@ -23,6 +23,16 @@ class Str
 	}
 
     /**
+     * Static form of constructor
+     * @param String $origText
+     * @return Str
+     */
+	public static function create(String $origText) {
+	    $str = new Str($origText);
+	    return $str;
+    }
+
+    /**
      * String representation of the object
      * @return String returns the active text
      */
@@ -34,41 +44,38 @@ class Str
     /**
      * @return int Length of the string
      */
-	public function length() 
+	public function length()
 	{
 		return strlen($this->activeText);
 	}
 
     /**
      * Runs `ltrim()` on the string
-     * @param String $character_mask Argument to `ltrim()`
      * @return $this
      */
-	public function ltrim(String $character_mask = "\t\n\r\0\x0B")
+	public function ltrim()
 	{
-		$this->activeText = ltrim($this->activeText, $character_mask);
+		$this->activeText = ltrim($this->activeText);
 		return $this;
 	}
 
     /**
      * Runs `rtrim()` on the string
-     * @param String $character_mask Argument to `rtrim()`
      * @return $this
      */
-	public function rtrim(String $character_mask = "\t\n\r\0\x0B")
+	public function rtrim()
 	{
-		$this->activeText = rtrim($this->activeText, $character_mask);
+		$this->activeText = rtrim($this->activeText);
 		return $this;
 	}
 
     /**
      * Runs `trim()` on the string
-     * @param String $character_mask Argument to `trim()`
      * @return $this
      */
-	public function trim(String $character_mask = "\t\n\r\0\x0B")
+	public function trim()
 	{
-		$this->activeText = trim($this->activeText, $character_mask);
+		$this->activeText = trim($this->activeText);
 		return $this;
 	}
 
@@ -104,7 +111,7 @@ class Str
      * Converts all characters in to lower case
      * @return $this
      */
-	public function downcase() 
+	public function downcase()
 	{
 		$this->activeText = strtolower($this->activeText);
 		return $this;
@@ -114,7 +121,7 @@ class Str
      * Converts all characters in to upper case
      * @return $this
      */
-	public function upcase() 
+	public function upcase()
 	{
 		$this->activeText = strtoupper($this->activeText);
 		return $this;
@@ -170,26 +177,110 @@ class Str
 	    return explode((String)$delimiter, $this->activeText);
     }
 
-    public function substring($startIndex, $length = null) {
-        if($this->length() - 1 > (int)$startIndex){
-            return null;
-        }
-
-        if($length === null) {
-            return $this->activeText[$startIndex];
-        } elseif ($length > 0) {
-
-        }
-
+    /**
+     * Appends another string to the existing one
+     * @param String $stringToAppend
+     * @return Str
+     */
+    public function append($stringToAppend)
+    {
+        $this->activeText .= $stringToAppend;
+        return $this;
     }
 
-    public function chomp() {}
-    public function chop() {}
-    public function isEmpty() {}
-    public function contains() {}
-    public function startsWith() {}
-    public function endsWith() {}
-    public function isEqualTo() {}
+    /**
+     * Prepends another string to the existing one
+     * @param String $stringToPrepend
+     * @return Str
+     */
+    public function prepend($stringToPrepend)
+    {
+        $this->activeText = (String)$stringToPrepend . $this->activeText;
+        return $this;
+    }
+
+    /**
+     * Returns substring using the substr method
+     * @param int $start
+     * @param int $length
+     * @return bool|string
+     */
+    public function substr(int $start, int $length = null)
+    {
+        return substr($this->activeText, $start, $length);
+    }
+
+    /**
+     * Tells whether or not the string is empty
+     * @param bool $trimStringFirst perform a trim on the string first
+     * @return bool
+     */
+    public function isEmpty($trimStringFirst = false)
+    {
+        $text = $this->activeText;
+        if ($trimStringFirst) {
+            $text = trim($text);
+        }
+
+        if ($text == '') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns if String contains a given substring
+     * @param String $needle
+     * @return bool
+     */
+    public function contains($needle)
+    {
+        if (strpos($this->activeText, (String)$needle) !== false) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks whether a given string starts with another (sub)string
+     *
+     * @param string $needle string to search
+     *
+     * @return bool
+     */
+    public function startsWith($needle)
+    {
+        // If the length of needle is greater than the length of this string, then return false
+        if(strlen($needle) > strlen($this->activeText)){
+            // To suppress the error in strpos function below
+            return false;
+        }
+        // search backwards starting from haystack length characters from the end
+        return $needle === "" || strrpos($this->activeText, $needle, -strlen($this->activeText)) !== false;
+    }
+
+    /**
+     * Checks whether a given string ends with another (sub)string
+     *
+     * @param string $needle String to search
+     *
+     * @return bool
+     */
+    public function endsWith($needle)
+    {
+        // If the length of needle is greater than the length of this string, then return false
+        if(strlen($needle) > strlen($this->activeText)){
+            // To suppress the error in strpos function below
+            return false;
+        }
+        // search forward starting from end minus needle length characters
+        return $needle === "" || strpos($this->activeText, $needle, strlen($this->activeText) - strlen($needle)) !== false;
+    }
+
+    public function isEqualTo()
+    {
+
+    }
     public function reverse() {}
     public function lJust() {}
     public function rJust() {}
@@ -213,5 +304,11 @@ echo "\ndowncasing: '" . $obj->downcase() . "'";
 echo "\nupcasing: '" . $obj->upcase() . "'";
 echo "\ncalling reset: '" . $obj->reset() . "'";
 echo "\ncalling chain (trim-upcase-togglecase): '" . $obj->trim()->upcase()->togglecase() . "'";
+
+echo "\n============";
+echo "\ncalling trim again: '" . $obj->trim() . "'";
+echo "\ncalling append: '" . $obj->append(' is a good boy') . "'";
+echo "\ncalling prepend: '" . $obj->prepend('Actually, ') . "'";
+
 
 echo "\n";
