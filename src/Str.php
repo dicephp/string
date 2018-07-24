@@ -1,174 +1,176 @@
 <?php
 
-namespace Dice\Types ;
+namespace Dice\Types;
 
 /**
-* Str: A near-natural Ruby-like String Implementation
-*/
+ * Str: A near-natural Ruby-like String Implementation
+ */
 class Str
 {
-	/**
-	 * @var String Original text with which the class was created
-	 */
-	protected $originalText;
+    /**
+     * @var String Original text with which the class was created
+     */
+    protected $originalText;
 
     /**
      * @var String Active value, used for chaining
      */
-	protected $activeText;
+    protected $activeText;
 
     /**
      * Str constructor.
      * @param String $origText Original text with which the object is to be constructed
      */
-	public function __construct($origText)
-	{
-		$this->originalText = $origText;
-		$this->activeText = $origText;
-	}
+    public function __construct($origText)
+    {
+        $this->originalText = $origText;
+        $this->activeText = $origText;
+    }
 
     /**
      * Static form of constructor
      * @param String $origText
      * @return Str
      */
-	public static function create($origText) {
-	    $str = new Str($origText);
-	    return $str;
+    public static function create($origText)
+    {
+        $str = new Str($origText);
+        return $str;
     }
 
     /**
      * String representation of the object
      * @return String returns the active text
      */
-	public function __toString()
-	{
-		return $this->activeText;
-	}
+    public function __toString()
+    {
+        return $this->activeText;
+    }
 
     /**
      * @return int Length of the string
      */
-	public function length()
-	{
-		return strlen($this->activeText);
-	}
+    public function length()
+    {
+        return strlen($this->activeText);
+    }
 
     /**
      * Runs `ltrim()` on the string
      * @return $this
      */
-	public function ltrim()
-	{
-		$this->activeText = ltrim($this->activeText);
-		return $this;
-	}
+    public function ltrim()
+    {
+        $this->activeText = ltrim($this->activeText);
+        return $this;
+    }
 
     /**
      * Runs `rtrim()` on the string
      * @return $this
      */
-	public function rtrim()
-	{
-		$this->activeText = rtrim($this->activeText);
-		return $this;
-	}
+    public function rtrim()
+    {
+        $this->activeText = rtrim($this->activeText);
+        return $this;
+    }
 
     /**
      * Runs `trim()` on the string
      * @return $this
      */
-	public function trim()
-	{
-		$this->activeText = trim($this->activeText);
-		return $this;
-	}
+    public function trim()
+    {
+        $this->activeText = trim($this->activeText);
+        return $this;
+    }
 
     /**
      * Alias of `trim()` without the optional character_mask argument
      * @return Str
      */
-	public function strip() {
-		// This is only a wrapper method
-		return $this->trim();
-	}
+    public function strip()
+    {
+        // This is only a wrapper method
+        return $this->trim();
+    }
 
     /**
      * Returns lines in the string (split by "\n")
      * @return array Lines in the string
      */
-	public function lines()
-	{
-		return explode("\n", $this->activeText);
-	}
+    public function lines()
+    {
+        return explode("\n", $this->activeText);
+    }
 
     /**
      * Resets the active text to the original text which was used when creating this String object
      * @return $this
      */
-	public function reset()
-	{
-		$this->activeText = $this->originalText;
-		return $this;
-	}
+    public function reset()
+    {
+        $this->activeText = $this->originalText;
+        return $this;
+    }
 
     /**
      * Converts all characters in to lower case
      * @return $this
      */
-	public function downcase()
-	{
-		$this->activeText = strtolower($this->activeText);
-		return $this;
-	}
+    public function downcase()
+    {
+        $this->activeText = strtolower($this->activeText);
+        return $this;
+    }
 
     /**
      * Converts all characters in to upper case
      * @return $this
      */
-	public function upcase()
-	{
-		$this->activeText = strtoupper($this->activeText);
-		return $this;
-	}
+    public function upcase()
+    {
+        $this->activeText = strtoupper($this->activeText);
+        return $this;
+    }
 
     /**
      * Swaps the case of alphabetic characters
      * @return $this
      */
-	public function togglecase()
-	{
-		$strAsArray = str_split($this->activeText);
-		$outputArray = [];
-		foreach ($strAsArray as $char) {
-			if (ctype_lower($char)) {
-				$outputArray[] = strtoupper($char);
-			} elseif (ctype_upper($char)) {
-				$outputArray[] = strtolower($char);
-			} else {
-				$outputArray[] = $char;
-			}
-		}
+    public function togglecase()
+    {
+        $strAsArray = str_split($this->activeText);
+        $outputArray = [];
+        foreach ($strAsArray as $char) {
+            if (ctype_lower($char)) {
+                $outputArray[] = strtoupper($char);
+            } elseif (ctype_upper($char)) {
+                $outputArray[] = strtolower($char);
+            } else {
+                $outputArray[] = $char;
+            }
+        }
 
-		$this->activeText = implode('', $outputArray);
-		return $this;
-	}
+        $this->activeText = implode('', $outputArray);
+        return $this;
+    }
 
     /**
      * Returns the entire string as an array of individual characters
      * @return array
      */
-	public function chars()
-	{
-		return str_split($this->activeText);
-	}
+    public function chars()
+    {
+        return str_split($this->activeText);
+    }
 
     /**
      * Alias of `explode()`
      * @param $delimiter
      * @return array
      */
-	public function split($delimiter)
+    public function split($delimiter)
     {
         return $this->explode($delimiter);
     }
@@ -178,8 +180,9 @@ class Str
      * @param String $delimiter Delimiter against which array creation happens
      * @return array
      */
-    public function explode($delimiter) {
-	    return explode((String)$delimiter, $this->activeText);
+    public function explode($delimiter)
+    {
+        return explode((String)$delimiter, $this->activeText);
     }
 
     /**
@@ -256,7 +259,7 @@ class Str
     public function startsWith($needle)
     {
         // If the length of needle is greater than the length of this string, then return false
-        if(strlen($needle) > strlen($this->activeText)){
+        if (strlen($needle) > strlen($this->activeText)) {
             // To suppress the error in strpos function below
             return false;
         }
@@ -274,12 +277,13 @@ class Str
     public function endsWith($needle)
     {
         // If the length of needle is greater than the length of this string, then return false
-        if(strlen($needle) > strlen($this->activeText)){
+        if (strlen($needle) > strlen($this->activeText)) {
             // To suppress the error in strpos function below
             return false;
         }
         // search forward starting from end minus needle length characters
-        return $needle === "" || strpos($this->activeText, $needle, strlen($this->activeText) - strlen($needle)) !== false;
+        return $needle === "" || strpos($this->activeText, $needle,
+                strlen($this->activeText) - strlen($needle)) !== false;
     }
 
     /**
@@ -314,7 +318,7 @@ class Str
     public function lJust($finalLength, $strPadding = ' ')
     {
         // If the final length is not more than the existing length, do nothing
-        if((int)$finalLength <= 0 || $this->length() >=  $finalLength) {
+        if ((int)$finalLength <= 0 || $this->length() >= $finalLength) {
             return $this;
         }
 
@@ -323,7 +327,7 @@ class Str
         // optionally being a substring (from the beginning) of the Padding string
         $lenDiff = $finalLength - $this->length();
 
-        while($lenDiff > strlen($strPadding)) {
+        while ($lenDiff > strlen($strPadding)) {
             $this->activeText .= $strPadding;
             $lenDiff = $finalLength - $this->length();
         }
@@ -341,7 +345,7 @@ class Str
     public function rJust($finalLength, $strPadding = ' ')
     {
         // If the final length is not more than the existing length, do nothing
-        if((int)$finalLength <= 0 || $this->length() >=  $finalLength) {
+        if ((int)$finalLength <= 0 || $this->length() >= $finalLength) {
             return $this;
         }
 
@@ -352,12 +356,13 @@ class Str
 
         $strToAdd = '';
 
-        while($lenDiff > strlen($strPadding)) {
+        while ($lenDiff > strlen($strPadding)) {
             $strToAdd = $strPadding . $strToAdd;
             $lenDiff = $finalLength - ($this->length() + strlen($strToAdd));
         }
 
-        $this->activeText = $strToAdd . (substr($strPadding, 0, ($finalLength - (strlen($this->activeText) + strlen($strToAdd))))) . $this->activeText;
+        $this->activeText = $strToAdd . (substr($strPadding, 0,
+                ($finalLength - (strlen($this->activeText) + strlen($strToAdd))))) . $this->activeText;
 
         return $this;
     }
@@ -383,18 +388,35 @@ class Str
     {
         $len = $this->length();
         if ($len > 0) {
-            return $this->chars()[$len -1];
+            return $this->chars()[$len - 1];
         }
 
         return '';
     }
 
-    public function partition() {}
-    public function slice() {}
-    public function squeeze() {}
-    public function truncate() {}
-    public function xmlEscape() {}
-    public function getLongestCommonSubsequenceWith($otherString) {}
+    public function partition()
+    {
+    }
+
+    public function slice()
+    {
+    }
+
+    public function squeeze()
+    {
+    }
+
+    public function truncate()
+    {
+    }
+
+    public function xmlEscape()
+    {
+    }
+
+    public function getLongestCommonSubsequenceWith($otherString)
+    {
+    }
 
     /**
      * Base 64 Encoding with optional URL Safe encoding
@@ -431,9 +453,17 @@ class Str
         $this->activeText = base64_decode($s);
     }
 
-    public function getAsSlug() {}
-    public function removeAccents() {}
-    public function isUtf8() {}
+    public function getAsSlug()
+    {
+    }
+
+    public function removeAccents()
+    {
+    }
+
+    public function isUtf8()
+    {
+    }
 
     /**
      * Magic method for retrieving original or active string
@@ -443,7 +473,7 @@ class Str
      */
     public function __get($name)
     {
-        switch($name) {
+        switch ($name) {
             case 'originalString':
                 return $this->originalText;
             case 'activeString':
