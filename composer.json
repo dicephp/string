@@ -1,0 +1,20 @@
+{
+  "name": "dice/types",
+  "description": "Near natural implementation of PHP built-in types. Inspired by Ruby",
+  "keywords": ["routing", "router"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Vaibhav Kaushal",
+      "email": "vaibhavkaushal123@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Dice\\Types\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=7.0"
+  },
+}
