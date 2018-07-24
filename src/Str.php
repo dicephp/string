@@ -362,16 +362,75 @@ class Str
         return $this;
     }
 
-    public function getFirstCharacter() {}
-    public function getLastCharacter() {}
+    /**
+     * Returns the first character of the string
+     * @return string
+     */
+    public function getFirstCharacter()
+    {
+        if ($this->length() > 0) {
+            return $this->chars()[0];
+        }
+
+        return '';
+    }
+
+    /**
+     * Returns the last character of the string
+     * @return string
+     */
+    public function getLastCharacter()
+    {
+        $len = $this->length();
+        if ($len > 0) {
+            return $this->chars()[$len -1];
+        }
+
+        return '';
+    }
+
     public function partition() {}
     public function slice() {}
     public function squeeze() {}
     public function truncate() {}
     public function xmlEscape() {}
     public function getLongestCommonSubsequenceWith($otherString) {}
-    public function base64Encode($urlSafe = false) {}
-    public function base64Decode($urlSafe = false) {}
+
+    /**
+     * Base 64 Encoding with optional URL Safe encoding
+     *
+     * @param bool $urlSafe Should we remove non URL Safe characters?
+     */
+    public function base64Encode($urlSafe = false)
+    {
+        $s = base64_encode($this->activeText);
+
+        if ($urlSafe) {
+            $s = str_replace('+', '-', $s);
+            $s = str_replace('/', '_', $s);
+            $s = str_replace('=', '', $s);
+        }
+
+        $this->activeText = $s;
+    }
+
+    /**
+     * Base 64 Decoding with optional URL Safe decoding
+     *
+     * @param bool $urlSafe Should we remove non URL Safe characters with correct base64 ones?
+     */
+    public function base64Decode($urlSafe = false)
+    {
+        $s = $this->activeText;
+
+        if ($urlSafe) {
+            $s = str_replace('_', '/', $s);
+            $s = str_replace('-', '+', $s);
+        }
+
+        $this->activeText = base64_decode($s);
+    }
+
     public function getAsSlug() {}
     public function removeAccents() {}
     public function isUtf8() {}
