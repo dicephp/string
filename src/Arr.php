@@ -19,7 +19,7 @@ class Arr
 
     /**
      * Arr constructor.
-     * @param array $origValue Original value with which the object is to be constructed
+     * @param mixed $origValue Original value with which the object is to be constructed
      */
 	public function __construct($origValue)
 	{
