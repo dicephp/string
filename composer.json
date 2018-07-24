@@ -1,6 +1,6 @@
 {
   "name": "dice/types",
-  "description": "Near natural implementation of PHP built-in types. Inspired by Ruby",
+  "description": "Near natural implementation of PHP built-in types. Inspired by Ruby.",
   "keywords": ["String", "Array", "Integer"],
   "license": "MIT",
   "authors": [
