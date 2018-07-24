@@ -21,7 +21,7 @@ class Str
      * Str constructor.
      * @param String $origText Original text with which the object is to be constructed
      */
-	public function __construct(Str $origText)
+	public function __construct($origText)
 	{
 		$this->originalText = $origText;
 		$this->activeText = $origText;
@@ -32,7 +32,7 @@ class Str
      * @param String $origText
      * @return Str
      */
-	public static function create(Str $origText) {
+	public static function create($origText) {
 	    $str = new Str($origText);
 	    return $str;
     }
