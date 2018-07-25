@@ -5,7 +5,7 @@ namespace Dice\Types ;
 /**
 * Arr: A near-natural Ruby-like Array Implementation
 */
-class Arr
+class Arr implements \ArrayAccess
 {
 	/**
 	 * @var array Original value with which the class was created
@@ -98,6 +98,29 @@ class Arr
      */
     public function addIndexedItem($index, $item) {
         $this->activeValue[$index] = $item;
+    }
+
+    // ====================================================================
+    // IMPLEMENTATION OF ArrayAccess INTERFACE METHODS
+    // ====================================================================
+    public function offsetSet($offset, $value) {
+        if (is_null($offset)) {
+            $this->activeValue[] = $value;
+        } else {
+            $this->activeValue[$offset] = $value;
+        }
+    }
+
+    public function offsetExists($offset) {
+        return isset($this->activeValue[$offset]);
+    }
+
+    public function offsetUnset($offset) {
+        unset($this->activeValue[$offset]);
+    }
+
+    public function offsetGet($offset) {
+        return isset($this->activeValue[$offset]) ? $this->activeValue[$offset] : null;
     }
 
 }
