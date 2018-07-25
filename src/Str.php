@@ -419,6 +419,34 @@ class Str
     }
 
     /**
+     * Tells whether the string is in any of the strings in the supplied array of strings
+     * @param string[]|Str[] $stringArray List of strings to check against
+     * @param bool $case_insensitive_comparison Should the comparison be case insensitive?
+     * @return bool
+     */
+    public function includedIn(array $stringArray, bool $case_insensitive_comparison = false) {
+        $active_text = $this->activeText;
+
+        if ($case_insensitive_comparison) {
+           $active_text = strtolower($active_text);
+        }
+
+        foreach ($stringArray as $single_string) {
+            // First convert to string representation
+            $single_string = (string)$single_string;
+            if ($case_insensitive_comparison) {
+                $single_string = strtolower($single_string);
+            }
+
+            if ($active_text === $single_string) {
+               return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Base 64 Encoding with optional URL Safe encoding
      *
      * @param bool $urlSafe Should we remove non URL Safe characters?
