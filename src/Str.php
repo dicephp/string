@@ -44,6 +44,9 @@ class Str implements ICast
      */
     public function __toString()
     {
+        if (empty($this->activeText)) {
+            return '';
+        }
         return $this->activeText;
     }
 
