@@ -98,7 +98,7 @@ class Arr implements \ArrayAccess
      * @return Str
      */
     public function jsonEncode() {
-        return new json_encode($this->activeValue);
+        return json_encode($this->activeValue);
     }
 
     /**
