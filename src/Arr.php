@@ -120,6 +120,17 @@ class Arr implements \ArrayAccess
     }
 
     public function offsetGet($offset) {
-        return isset($this->activeValue[$offset]) ? Arr::create($this->activeValue[$offset]) : null;
+        $valToProcess = null;
+        if (isset($this->activeValue[$offset])) {
+            // Value for given offset is there
+            $valToProcess = $this->activeValue[$offset];
+        }
+
+        if(is_array($valToProcess)) {
+            $valToProcess = Arr::create($valToProcess);
+        }
+
+        // Value for given offset is NOT there
+        return $valToProcess;
     }
 }
