@@ -120,7 +120,6 @@ class Arr implements \ArrayAccess
     }
 
     public function offsetGet($offset) {
-        return isset($this->activeValue[$offset]) ? $this->activeValue[$offset] : null;
+        return isset($this->activeValue[$offset]) ? Arr::create($this->activeValue[$offset]) : null;
     }
-
 }
