@@ -93,6 +93,17 @@ class Arr implements \ArrayAccess
     }
 
     /**
+     * Returns the JSON representation of the original data
+     *
+     * NOTE: This method here should be used instead of JSON
+     * @param bool $assoc Return as associative array?
+     * @return Str
+     */
+    public function jsonEncode($assoc = false) {
+        return new Str(json_encode($this->activeValue, $assoc));
+    }
+
+    /**
      * @param string $index The array index to be used when setting the item
      * @param mixed $item Item to be pushed to the array
      */
@@ -103,6 +114,9 @@ class Arr implements \ArrayAccess
     // ====================================================================
     // IMPLEMENTATION OF ArrayAccess INTERFACE METHODS
     // ====================================================================
+    /**
+     * @inheritdoc
+     */
     public function offsetSet($offset, $value) {
         if (is_null($offset)) {
             $this->activeValue[] = $value;
@@ -111,14 +125,23 @@ class Arr implements \ArrayAccess
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function offsetExists($offset) {
         return isset($this->activeValue[$offset]);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function offsetUnset($offset) {
         unset($this->activeValue[$offset]);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function offsetGet($offset) {
         $valToProcess = null;
         if (isset($this->activeValue[$offset])) {
