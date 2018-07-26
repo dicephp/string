@@ -5,7 +5,7 @@ namespace Dice\Types;
 /**
  * Str: A near-natural Ruby-like String Implementation
  */
-class Str
+class Str implements ICast
 {
     /**
      * @var String Original text with which the class was created
@@ -529,5 +529,13 @@ class Str
         }
     }
 
+    /**
+     * Convert the string to a scalar integer value
+     * @return integer
+     */
+    public function toInt()
+    {
+        return (int)$this->activeText;
+    }
 }
 
