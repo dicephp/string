@@ -413,7 +413,7 @@ class Str implements ICast
      * Truncates the string to a given length, adding elipses (if needed).
      *
      * @param $maxLength
-     * @return string the full string or the truncated string with eplise
+     * @return Str the full string or the truncated string with eplise
      */
     public function truncate($maxLength, $addEllipsis = true)
     {
