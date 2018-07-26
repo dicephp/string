@@ -406,8 +406,26 @@ class Str
     {
     }
 
-    public function truncate()
+    /**
+     * Truncates the string to a given length, adding elipses (if needed).
+     *
+     * @param $maxLength
+     * @return string the full string or the truncated string with eplise
+     */
+    public function truncate($maxLength, $addEllipsis = true)
     {
+        $applicableLength = $maxLength;
+        $ellipsis = '';
+        if ($addEllipsis) {
+            $applicableLength = $maxLength - 3;
+            $ellipsis = '...';
+        }
+
+        if (mb_strlen($this->activeText, 'UTF-8') > $applicableLength) {
+            $this->activeText = mb_substr($this->activeText, 0, $applicableLength, 'UTF-8') . $ellipsis;
+        }
+
+        return $this;
     }
 
     public function xmlEscape()
