@@ -95,12 +95,11 @@ class Arr implements \ArrayAccess
     /**
      * Returns the JSON representation of the original data
      *
-     * NOTE: This method here should be used instead of JSON
-     * @param bool $assoc Return as associative array?
+     * NOTE: json_encode() will return empty string for Arr objects
      * @return Str
      */
-    public function jsonEncode($assoc = false) {
-        return new Str(json_encode($this->activeValue, $assoc));
+    public function jsonEncode() {
+        return new Str(json_encode($this->activeValue));
     }
 
     /**
