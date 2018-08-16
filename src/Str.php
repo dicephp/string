@@ -4,6 +4,9 @@ namespace Dice\Types;
 
 /**
  * Str: A near-natural Ruby-like String Implementation
+ *
+ * @property-read string activeString Returns the active string of the object
+ * @property-read string activeText Same as 'activeString'
  */
 class Str implements ICast
 {
@@ -121,7 +124,7 @@ class Str implements ICast
      * Converts all characters in to lower case
      * @return $this
      */
-    public function downcase()
+    public function downCase()
     {
         $this->activeText = strtolower($this->activeText);
         return $this;
@@ -131,7 +134,7 @@ class Str implements ICast
      * Converts all characters in to upper case
      * @return $this
      */
-    public function upcase()
+    public function upCase()
     {
         $this->activeText = strtoupper($this->activeText);
         return $this;
@@ -141,7 +144,7 @@ class Str implements ICast
      * Swaps the case of alphabetic characters
      * @return $this
      */
-    public function togglecase()
+    public function toggleCase()
     {
         $strAsArray = str_split($this->activeText);
         $outputArray = [];
@@ -412,8 +415,9 @@ class Str implements ICast
     /**
      * Truncates the string to a given length, adding elipses (if needed).
      *
-     * @param $maxLength
-     * @return Str the full string or the truncated string with eplise
+     * @param int $maxLength Maximum length to which the string should be cut.
+     * @param bool $addEllipsis Should the truncation system add the ellipsis to the string?
+     * @return Str the full string or the truncated string with ellipsis
      */
     public function truncate($maxLength, $addEllipsis = true)
     {
@@ -428,6 +432,25 @@ class Str implements ICast
             $this->activeText = mb_substr($this->activeText, 0, $applicableLength, 'UTF-8') . $ellipsis;
         }
 
+        return $this;
+    }
+
+    /**
+     * Wraps the string with another string
+     *
+     * @param string $wrapString String which is to be added to the beginning of the string
+     * @param null $wrapStringEnd String which is to be added to the end of the string
+     *                              If this is set to null, the wrapString will be used instead!
+     *
+     * @return Str Returns the string after wrapping
+     */
+    public function wrapWith($wrapString = '"', $wrapStringEnd = null)
+    {
+        if ($wrapStringEnd == null) {
+            $wrapStringEnd = $wrapString;
+        }
+
+        $this->activeText = $wrapString . $this->activeText . $wrapStringEnd;
         return $this;
     }
 
@@ -510,8 +533,22 @@ class Str implements ICast
     {
     }
 
-    public function isUtf8()
-    {
+    /**
+     * Check whether a string is utf 8 or not
+     *
+     * @return string
+     */
+    public function isUtf8() {
+        return preg_match('%^(?:
+					[\x09\x0A\x0D\x20-\x7E]             # ASCII
+					| [\xC2-\xDF][\x80-\xBF]            # non-overlong 2-byte
+					|  \xE0[\xA0-\xBF][\x80-\xBF]       # excluding overlongs
+					| [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2} # straight 3-byte
+					|  \xED[\x80-\x9F][\x80-\xBF]       # excluding surrogates
+					|  \xF0[\x90-\xBF][\x80-\xBF]{2}    # planes 1-3
+					| [\xF1-\xF3][\x80-\xBF]{3}         # planes 4-15
+					|  \xF4[\x80-\x8F][\x80-\xBF]{2}    # plane 16
+					)*$%xs', $this->activeText);
     }
 
     /**
@@ -526,6 +563,7 @@ class Str implements ICast
             case 'originalString':
                 return $this->originalText;
             case 'activeString':
+            case 'activeText':
                 return $this->activeText;
             default:
                 throw new \Exception('Invalid property requested', 1);
@@ -539,6 +577,15 @@ class Str implements ICast
     public function toInt()
     {
         return (int)$this->activeText;
+    }
+
+    /**
+     * Convert the string to a scalar float value
+     * @return float
+     */
+    public function toFloat()
+    {
+        return (float)$this->activeText;
     }
 }
 
