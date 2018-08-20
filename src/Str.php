@@ -496,6 +496,7 @@ class Str implements ICast
      * Base 64 Encoding with optional URL Safe encoding
      *
      * @param bool $urlSafe Should we remove non URL Safe characters?
+     * @return Str
      */
     public function base64Encode($urlSafe = false)
     {
@@ -508,12 +509,15 @@ class Str implements ICast
         }
 
         $this->activeText = $s;
+
+        return $this;
     }
 
     /**
      * Base 64 Decoding with optional URL Safe decoding
      *
      * @param bool $urlSafe Should we remove non URL Safe characters with correct base64 ones?
+     * @return Str
      */
     public function base64Decode($urlSafe = false)
     {
@@ -525,6 +529,8 @@ class Str implements ICast
         }
 
         $this->activeText = base64_decode($s);
+
+        return $this;
     }
 
     public function getAsSlug()

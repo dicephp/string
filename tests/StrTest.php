@@ -3,10 +3,13 @@
 use PHPUnit\Framework\TestCase;
 use Dice\Types\Str;
 
+/**
+ * Class StrTest test for methods in the Str class
+ */
 class StrTest extends TestCase
 {
     /**
-     *
+     * Test all the methods in the Str class
      */
     public function testMethods()
     {
@@ -98,9 +101,19 @@ class StrTest extends TestCase
 
         // =============== TEST Miscellaneous Methods ==============
 
-        // Base 64
+        // Base 64 (ENCODING)
+        $obj = new Str('test string>');
+        $this->assertSame('dGVzdCBzdHJpbmc+', '' . $obj->base64Encode()->activeText . '', "base64Encode failed");
+        $obj->reset();
+        $this->assertSame('dGVzdCBzdHJpbmc-', '' . $obj->base64Encode(true)->activeText . '', "base64Encode 2 failed");
+        $obj = new Str('test string?');
+        $this->assertSame('dGVzdCBzdHJpbmc/', '' . $obj->base64Encode(false)->activeText . '', "base64Encode 3 failed");
+        $obj->reset();
+        $this->assertSame('dGVzdCBzdHJpbmc_', '' . $obj->base64Encode(true)->activeText . '', "base64Encode 4 failed");
         $obj = new Str('test string');
-        $this->assertSame('"test string"', '' . $obj->base64Encode() . '', "base64Encode failed");
+        $this->assertSame('dGVzdCBzdHJpbmc=', '' . $obj->base64Encode(false)->activeText . '', "base64Encode 5 failed");
+        $obj->reset();
+        $this->assertSame('dGVzdCBzdHJpbmc', '' . $obj->base64Encode(true)->activeText . '', "base64Encode 6 failed");
 
         // wrapWith
         $obj = new Str('test string');
