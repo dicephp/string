@@ -20,6 +20,31 @@ class StrTest extends TestCase
         $this->assertSame('Vaibhav Kaushal', $obj->toggleCase()->activeText, "toggleCase 2 failed");
         $this->assertSame('vaibhav kaushal', $obj->downCase()->activeText, "downcase failed");
         $this->assertSame('VAIBHAV KAUSHAL', $obj->upCase()->activeText, "upCase failed");
+
+        $this->assertSame('LAHSUAK VAHBIAV', $obj->reverse()->activeText, "reverse failed");
+
+        $obj->reset()->trim();
+        $this->assertSame(true, $obj->startsWith('Vai'), "startsWith failed");
+        $this->assertSame(false, $obj->startsWith('vai'), "startsWith 2 failed");
+        $this->assertSame(true, $obj->startsWith(''), "startsWith 3 failed");
+        $this->assertSame(false, $obj->startsWith(' '), "startsWith 4 failed");
+        $this->assertSame(false, $obj->startsWith('Vaibhav Kaushal1'), "startsWith 5 failed");
+
+        $this->assertSame(false, $obj->endsWith(' '), "endsWith failed");
+        $this->assertSame(true, $obj->endsWith(''), "endsWith 2 failed");
+        $this->assertSame(true, $obj->endsWith('shal'), "endsWith 3 failed");
+        $this->assertSame(false, $obj->endsWith('shal '), "endsWith 4 failed");
+        $this->assertSame(false, $obj->endsWith('1Vaibhav Kaushal'), "endsWith 5 failed");
+
+        $this->assertSame(true, $obj->contains(' '), "contains failed");
+        $this->assertSame(true, $obj->contains('Vaibhav'), "contains 2 failed");
+        $this->assertSame(false, $obj->contains('vaibhav'), "contains 3 failed");
+        $this->assertSame(true, $obj->contains('av Kau'), "contains 4 failed");
+        $this->assertSame(true, $obj->contains('al'), "contains 5 failed");
+
+        $this->assertSame(true, $obj->isEqualTo('Vaibhav Kaushal'), "isEqualTo failed");
+        $this->assertSame(false, $obj->isEqualTo('vaibhav kaushal'), "isEqualTo 2 failed");
+
         $obj->reset();
         $this->assertSame(' Vaibhav Kaushal ', $obj->activeText, "reset failed");
         $this->assertSame('vaibhav kaushal', $obj->reset()->trim()->upCase()->downCase()->activeText,
@@ -68,6 +93,15 @@ class StrTest extends TestCase
         $this->assertSame('/"test string"/', $obj->wrapWith('/')->activeText, "wrapWith 2 failed");
         $this->assertSame('[/"test string"/]', $obj->wrapWith('[', ']')->activeText, "wrapWith 3 failed");
 
+        // empty or not
+        $obj = new Str('test string');
+        $this->assertSame(false, $obj->isEmpty(), "empty failed");
+        $obj = new Str('');
+        $this->assertSame(true, $obj->isEmpty(), "empty 2 failed");
 
+        // Truncate
+        $obj = new Str('test string');
+        $this->assertSame('test', $obj->truncate(4, false)->activeText);
+        $this->assertSame('test', $obj->truncate(4, false)->activeText);
     }
 }
