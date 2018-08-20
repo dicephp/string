@@ -128,11 +128,11 @@ class StrTest extends TestCase
         $obj = new Str( <<<TESTSTRING
 this is a string
 made up of multiple lines
- for testing multiples lines
+ for testing multiples lines 
  
 being sent to the lines method
 TESTSTRING
 );
-        $this->assertSame([ 'this is a string', 'made up of multiple lines', ' for testing multiples lines', '', 'being sent to the lines method' ], $obj->lines());
+        $this->assertSame([ 'this is a string', 'made up of multiple lines', ' for testing multiples lines ', ' ', 'being sent to the lines method' ], $obj->lines());
     }
 }
