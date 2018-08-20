@@ -123,5 +123,16 @@ class StrTest extends TestCase
         $this->assertSame(false, $obj->includedIn(['first string', 'Not test string', 'last string']));
         $this->assertSame(false, $obj->includedIn(['first string', 'Not test string']));
         $this->assertSame(false, $obj->includedIn(['Not test string']));
+
+        // Lines
+        $obj = new Str( <<<TESTSTRING
+this is a string
+made up of multiple lines
+ for testing multiples lines
+ 
+being sent to the lines method
+TESTSTRING
+);
+        $this->assertSame([ 'this is a string', 'made up of multiple lines', ' for testing multiples lines', '', 'being sent to the lines method' ], $obj->lines());
     }
 }
