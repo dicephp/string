@@ -5,6 +5,9 @@ use Dice\Types\Str;
 
 class StrTest extends TestCase
 {
+    /**
+     *
+     */
     public function testMethods()
     {
         $obj = new Str(" Vaibhav Kaushal ");
@@ -78,6 +81,12 @@ class StrTest extends TestCase
         $this->assertSame('                                   Vaibhav Kaushal', $obj->rJust(50, ' ')->activeText,
             "rJust run 4 failed");
 
+        $obj->reset()->trim();
+        $this->assertSame(['V', 'a', 'i', 'b', 'h', 'a', 'v', ' ', 'K', 'a', 'u', 's', 'h', 'a', 'l'], $obj->chars(),
+            "chars failed");
+        $this->assertSame(['Vaibhav', 'Kaushal'], $obj->explode(' '), "toInt failed");
+        $this->assertSame(['V', 'ibh', 'v K', 'ush', 'l'], $obj->split('a'), "toInt failed");
+
         // =============== TEST Casts ==============
         $obj = new Str('123');
         $this->assertSame(123, $obj->toInt(), "toInt failed");
@@ -85,6 +94,7 @@ class StrTest extends TestCase
         $this->assertSame(123.123, $obj->toFloat(), "toFloat failed");
         $obj = new Str('123.0');
         $this->assertSame(123.0, $obj->toFloat(), "toFloat 2 failed");
+        $this->assertSame(['123.0'], $obj->toArray(), 'toArray failed');
 
         // =============== TEST Miscellaneous Methods ==============
         // wrapWith
@@ -102,6 +112,16 @@ class StrTest extends TestCase
         // Truncate
         $obj = new Str('test string');
         $this->assertSame('test', $obj->truncate(4, false)->activeText);
-        $this->assertSame('test', $obj->truncate(4, false)->activeText);
+        $obj->reset();
+        $this->assertSame('test...', $obj->truncate(7)->activeText);
+
+        // Included In
+        $obj = new Str('test string');
+        $this->assertSame(true, $obj->includedIn(['test string']));
+        $this->assertSame(true, $obj->includedIn(['first string', 'test string']));
+        $this->assertSame(true, $obj->includedIn(['first string', 'test string', 'last string']));
+        $this->assertSame(false, $obj->includedIn(['first string', 'Not test string', 'last string']));
+        $this->assertSame(false, $obj->includedIn(['first string', 'Not test string']));
+        $this->assertSame(false, $obj->includedIn(['Not test string']));
     }
 }

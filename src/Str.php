@@ -7,6 +7,7 @@ namespace Dice\Types;
  *
  * @property-read string activeString Returns the active string of the object
  * @property-read string activeText Same as 'activeString'
+ * @property-read string originalString The original string with which the object was created
  */
 class Str implements ICast
 {
@@ -188,7 +189,7 @@ class Str implements ICast
      */
     public function explode($delimiter)
     {
-        return explode((String)$delimiter, $this->activeText);
+        return explode((string)$delimiter, $this->activeText);
     }
 
     /**
@@ -586,6 +587,14 @@ class Str implements ICast
     public function toFloat()
     {
         return (float)$this->activeText;
+    }
+
+    /**
+     * Puts the string in an array and returns the array
+     * @return array
+     */
+    public function toArray(){
+        return [$this->activeText];
     }
 }
 
