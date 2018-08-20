@@ -469,11 +469,12 @@ class Str implements ICast
      * @param bool $case_insensitive_comparison Should the comparison be case insensitive?
      * @return bool
      */
-    public function includedIn(array $stringArray, bool $case_insensitive_comparison = false) {
+    public function includedIn(array $stringArray, bool $case_insensitive_comparison = false)
+    {
         $active_text = $this->activeText;
 
         if ($case_insensitive_comparison) {
-           $active_text = strtolower($active_text);
+            $active_text = strtolower($active_text);
         }
 
         foreach ($stringArray as $single_string) {
@@ -484,7 +485,7 @@ class Str implements ICast
             }
 
             if ($active_text === $single_string) {
-               return true;
+                return true;
             }
         }
 
@@ -539,7 +540,8 @@ class Str implements ICast
      *
      * @return string
      */
-    public function isUtf8() {
+    public function isUtf8()
+    {
         return preg_match('%^(?:
 					[\x09\x0A\x0D\x20-\x7E]             # ASCII
 					| [\xC2-\xDF][\x80-\xBF]            # non-overlong 2-byte
@@ -593,7 +595,8 @@ class Str implements ICast
      * Puts the string in an array and returns the array
      * @return array
      */
-    public function toArray(){
+    public function toArray()
+    {
         return [$this->activeText];
     }
 }

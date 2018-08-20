@@ -97,6 +97,11 @@ class StrTest extends TestCase
         $this->assertSame(['123.0'], $obj->toArray(), 'toArray failed');
 
         // =============== TEST Miscellaneous Methods ==============
+
+        // Base 64
+        $obj = new Str('test string');
+        $this->assertSame('"test string"', '' . $obj->base64Encode() . '', "base64Encode failed");
+
         // wrapWith
         $obj = new Str('test string');
         $this->assertSame('"test string"', '' . $obj->wrapWith() . '', "wrapWith failed");
@@ -111,18 +116,18 @@ class StrTest extends TestCase
 
         // Truncate
         $obj = new Str('test string');
-        $this->assertSame('test', $obj->truncate(4, false)->activeText);
+        $this->assertSame('test', $obj->truncate(4, false)->activeText, 'truncate failed');
         $obj->reset();
-        $this->assertSame('test...', $obj->truncate(7)->activeText);
+        $this->assertSame('test...', $obj->truncate(7)->activeText, 'truncate 2 failed');
 
         // Included In
         $obj = new Str('test string');
-        $this->assertSame(true, $obj->includedIn(['test string']));
-        $this->assertSame(true, $obj->includedIn(['first string', 'test string']));
-        $this->assertSame(true, $obj->includedIn(['first string', 'test string', 'last string']));
-        $this->assertSame(false, $obj->includedIn(['first string', 'Not test string', 'last string']));
-        $this->assertSame(false, $obj->includedIn(['first string', 'Not test string']));
-        $this->assertSame(false, $obj->includedIn(['Not test string']));
+        $this->assertSame(true, $obj->includedIn(['test string']), 'includedIn failed');
+        $this->assertSame(true, $obj->includedIn(['first string', 'test string']), 'includedIn 2 failed');
+        $this->assertSame(true, $obj->includedIn(['first string', 'test string', 'last string']), 'includedIn 3 failed');
+        $this->assertSame(false, $obj->includedIn(['first string', 'Not test string', 'last string']), 'includedIn 4 failed');
+        $this->assertSame(false, $obj->includedIn(['first string', 'Not test string']), 'includedIn 5 failed');
+        $this->assertSame(false, $obj->includedIn(['Not test string']), 'includedIn 6 failed');
 
         // Lines
         $obj = new Str( <<<TESTSTRING
@@ -133,6 +138,6 @@ made up of multiple lines
 being sent to the lines method
 TESTSTRING
 );
-        $this->assertSame([ 'this is a string', 'made up of multiple lines', ' for testing multiples lines ', ' ', 'being sent to the lines method' ], $obj->lines());
+        $this->assertSame([ 'this is a string', 'made up of multiple lines', ' for testing multiples lines ', ' ', 'being sent to the lines method' ], $obj->lines(), 'lines failed');
     }
 }

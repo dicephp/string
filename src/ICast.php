@@ -17,4 +17,16 @@ interface ICast
      */
     public function toInt();
 
+    /**
+     * Convert the value to a scalar float value
+     * @return float
+     */
+    public function toFloat();
+
+    /**
+     * Convert the value to an array (create an array with this element as a single element in the array)
+     * @return array
+     */
+    public function toArray();
+
 }
