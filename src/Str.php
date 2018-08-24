@@ -5,9 +5,8 @@ namespace Dice\Types;
 /**
  * Str: A near-natural Ruby-like String Implementation
  *
- * @property-read string activeString Returns the active string of the object
- * @property-read string activeText Same as 'activeString'
- * @property-read string originalString The original string with which the object was created
+ * @property-read string activeValue Returns the active string of the object
+ * @property-read string originalValue The original string with which the object was created
  */
 class Str implements ICast
 {
@@ -19,7 +18,7 @@ class Str implements ICast
     /**
      * @var String Active value, used for chaining
      */
-    protected $activeText;
+    protected $activeValue;
 
     /**
      * Encoding of the string. Assume that it is UTF-8
@@ -34,7 +33,7 @@ class Str implements ICast
     public function __construct($origText)
     {
         $this->originalText = $origText;
-        $this->activeText = $origText;
+        $this->activeValue = $origText;
     }
 
     /**
@@ -62,7 +61,7 @@ class Str implements ICast
      */
     public function length()
     {
-        return strlen($this->activeText);
+        return strlen($this->activeValue);
     }
 
     /**
@@ -71,7 +70,7 @@ class Str implements ICast
      */
     public function ltrim()
     {
-        $this->activeText = ltrim($this->activeText);
+        $this->activeValue = ltrim($this->activeValue);
         return $this;
     }
 
@@ -81,7 +80,7 @@ class Str implements ICast
      */
     public function rtrim()
     {
-        $this->activeText = rtrim($this->activeText);
+        $this->activeValue = rtrim($this->activeValue);
         return $this;
     }
 
@@ -91,7 +90,7 @@ class Str implements ICast
      */
     public function trim()
     {
-        $this->activeText = trim($this->activeText);
+        $this->activeValue = trim($this->activeValue);
         return $this;
     }
 
@@ -111,7 +110,7 @@ class Str implements ICast
      */
     public function lines()
     {
-        return explode("\n", $this->activeText);
+        return explode("\n", $this->activeValue);
     }
 
     /**
@@ -120,7 +119,7 @@ class Str implements ICast
      */
     public function reset()
     {
-        $this->activeText = $this->originalText;
+        $this->activeValue = $this->originalText;
         return $this;
     }
 
@@ -130,7 +129,7 @@ class Str implements ICast
      */
     public function downCase()
     {
-        $this->activeText = strtolower($this->activeText);
+        $this->activeValue = strtolower($this->activeValue);
         return $this;
     }
 
@@ -140,7 +139,7 @@ class Str implements ICast
      */
     public function upCase()
     {
-        $this->activeText = strtoupper($this->activeText);
+        $this->activeValue = strtoupper($this->activeValue);
         return $this;
     }
 
@@ -150,7 +149,7 @@ class Str implements ICast
      */
     public function toggleCase()
     {
-        $strAsArray = str_split($this->activeText);
+        $strAsArray = str_split($this->activeValue);
         $outputArray = [];
         foreach ($strAsArray as $char) {
             if (ctype_lower($char)) {
@@ -162,7 +161,7 @@ class Str implements ICast
             }
         }
 
-        $this->activeText = implode('', $outputArray);
+        $this->activeValue = implode('', $outputArray);
         return $this;
     }
 
@@ -172,7 +171,7 @@ class Str implements ICast
      */
     public function chars()
     {
-        return str_split($this->activeText);
+        return str_split($this->activeValue);
     }
 
     /**
@@ -192,7 +191,7 @@ class Str implements ICast
      */
     public function explode($delimiter)
     {
-        return explode((string)$delimiter, $this->activeText);
+        return explode((string)$delimiter, $this->activeValue);
     }
 
     /**
@@ -202,7 +201,7 @@ class Str implements ICast
      */
     public function append($stringToAppend)
     {
-        $this->activeText .= $stringToAppend;
+        $this->activeValue .= $stringToAppend;
         return $this;
     }
 
@@ -213,7 +212,7 @@ class Str implements ICast
      */
     public function prepend($stringToPrepend)
     {
-        $this->activeText = (String)$stringToPrepend . $this->activeText;
+        $this->activeValue = (String)$stringToPrepend . $this->activeValue;
         return $this;
     }
 
@@ -225,7 +224,7 @@ class Str implements ICast
      */
     public function substr(int $start, int $length = null)
     {
-        return substr($this->activeText, $start, $length);
+        return substr($this->activeValue, $start, $length);
     }
 
     /**
@@ -235,7 +234,7 @@ class Str implements ICast
      */
     public function isEmpty($trimStringFirst = false)
     {
-        $text = $this->activeText;
+        $text = $this->activeValue;
         if ($trimStringFirst) {
             $text = trim($text);
         }
@@ -253,7 +252,7 @@ class Str implements ICast
      */
     public function contains($needle)
     {
-        if (strpos($this->activeText, (String)$needle) !== false) {
+        if (strpos($this->activeValue, (String)$needle) !== false) {
             return true;
         }
         return false;
@@ -269,12 +268,12 @@ class Str implements ICast
     public function startsWith($needle)
     {
         // If the length of needle is greater than the length of this string, then return false
-        if (strlen($needle) > strlen($this->activeText)) {
+        if (strlen($needle) > strlen($this->activeValue)) {
             // To suppress the error in strpos function below
             return false;
         }
         // search backwards starting from haystack length characters from the end
-        return $needle === "" || strrpos($this->activeText, $needle, -strlen($this->activeText)) !== false;
+        return $needle === "" || strrpos($this->activeValue, $needle, -strlen($this->activeValue)) !== false;
     }
 
     /**
@@ -287,13 +286,13 @@ class Str implements ICast
     public function endsWith($needle)
     {
         // If the length of needle is greater than the length of this string, then return false
-        if (strlen($needle) > strlen($this->activeText)) {
+        if (strlen($needle) > strlen($this->activeValue)) {
             // To suppress the error in strpos function below
             return false;
         }
         // search forward starting from end minus needle length characters
-        return $needle === "" || strpos($this->activeText, $needle,
-                strlen($this->activeText) - strlen($needle)) !== false;
+        return $needle === "" || strpos($this->activeValue, $needle,
+                strlen($this->activeValue) - strlen($needle)) !== false;
     }
 
     /**
@@ -303,7 +302,7 @@ class Str implements ICast
      */
     public function isEqualTo($stringToCompare)
     {
-        if ($this->activeText === (String)$stringToCompare) {
+        if ($this->activeValue === (String)$stringToCompare) {
             return true;
         }
         return false;
@@ -315,7 +314,7 @@ class Str implements ICast
      */
     public function reverse()
     {
-        $this->activeText = strrev($this->activeText);
+        $this->activeValue = strrev($this->activeValue);
         return $this;
     }
 
@@ -338,11 +337,11 @@ class Str implements ICast
         $lenDiff = $finalLength - $this->length();
 
         while ($lenDiff > strlen($strPadding)) {
-            $this->activeText .= $strPadding;
+            $this->activeValue .= $strPadding;
             $lenDiff = $finalLength - $this->length();
         }
 
-        $this->activeText = $this->activeText . (substr($strPadding, 0, ($finalLength - strlen($this->activeText))));
+        $this->activeValue = $this->activeValue . (substr($strPadding, 0, ($finalLength - strlen($this->activeValue))));
         return $this;
     }
 
@@ -371,8 +370,8 @@ class Str implements ICast
             $lenDiff = $finalLength - ($this->length() + strlen($strToAdd));
         }
 
-        $this->activeText = $strToAdd . (substr($strPadding, 0,
-                ($finalLength - (strlen($this->activeText) + strlen($strToAdd))))) . $this->activeText;
+        $this->activeValue = $strToAdd . (substr($strPadding, 0,
+                ($finalLength - (strlen($this->activeValue) + strlen($strToAdd))))) . $this->activeValue;
 
         return $this;
     }
@@ -432,8 +431,8 @@ class Str implements ICast
             $ellipsis = '...';
         }
 
-        if (mb_strlen($this->activeText, 'UTF-8') > $applicableLength) {
-            $this->activeText = mb_substr($this->activeText, 0, $applicableLength, 'UTF-8') . $ellipsis;
+        if (mb_strlen($this->activeValue, 'UTF-8') > $applicableLength) {
+            $this->activeValue = mb_substr($this->activeValue, 0, $applicableLength, 'UTF-8') . $ellipsis;
         }
 
         return $this;
@@ -454,7 +453,7 @@ class Str implements ICast
             $wrapStringEnd = $wrapString;
         }
 
-        $this->activeText = $wrapString . $this->activeText . $wrapStringEnd;
+        $this->activeValue = $wrapString . $this->activeValue . $wrapStringEnd;
         return $this;
     }
 
@@ -474,7 +473,7 @@ class Str implements ICast
      */
     public function includedIn(array $stringArray, bool $case_insensitive_comparison = false)
     {
-        $active_text = $this->activeText;
+        $active_text = $this->activeValue;
 
         if ($case_insensitive_comparison) {
             $active_text = strtolower($active_text);
@@ -503,7 +502,7 @@ class Str implements ICast
      */
     public function base64Encode($urlSafe = false)
     {
-        $s = base64_encode($this->activeText);
+        $s = base64_encode($this->activeValue);
 
         if ($urlSafe) {
             $s = str_replace('+', '-', $s);
@@ -511,7 +510,7 @@ class Str implements ICast
             $s = str_replace('=', '', $s);
         }
 
-        $this->activeText = $s;
+        $this->activeValue = $s;
 
         return $this;
     }
@@ -524,14 +523,14 @@ class Str implements ICast
      */
     public function base64Decode($urlSafe = false)
     {
-        $s = $this->activeText;
+        $s = $this->activeValue;
 
         if ($urlSafe) {
             $s = str_replace('_', '/', $s);
             $s = str_replace('-', '+', $s);
         }
 
-        $this->activeText = base64_decode($s);
+        $this->activeValue = base64_decode($s);
 
         return $this;
     }
@@ -547,12 +546,12 @@ class Str implements ICast
     public function toSlug($intMaxLength = 65000)
     {
         // Slugs are normally used in
-        $strString = $this->activeText;
+        $strString = $this->activeValue;
 
         // If the string is going to be of zero length, we return empty string
         // NOTE: We run 'trim' because slugs are trimmed anyway
         if (\mb_strlen(trim($strString), $this->encoding) == 0) {
-            $this->activeText = '';
+            $this->activeValue = '';
         }
 
         $strString = strip_tags($strString);
@@ -572,7 +571,7 @@ class Str implements ICast
         $strString = mb_substr($strString, 0, $intMaxLength, $this->encoding);
         $strString = rtrim($strString, '-'); // When the end of the text remains the hyphen, it is removed.
 
-        $this->activeText = $strString;
+        $this->activeValue = $strString;
         return $this;
     }
 
@@ -737,11 +736,10 @@ class Str implements ICast
     public function __get($name)
     {
         switch ($name) {
-            case 'originalString':
+            case 'originalValue':
                 return $this->originalText;
-            case 'activeString':
-            case 'activeText':
-                return $this->activeText;
+            case 'activeValue':
+                return $this->activeValue;
             default:
                 throw new \Exception('Invalid property requested', 1);
         }
@@ -753,7 +751,7 @@ class Str implements ICast
      */
     public function toInt()
     {
-        return (int)$this->activeText;
+        return (int)$this->activeValue;
     }
 
     /**
@@ -762,7 +760,7 @@ class Str implements ICast
      */
     public function toFloat()
     {
-        return (float)$this->activeText;
+        return (float)$this->activeValue;
     }
 
     /**
@@ -771,7 +769,7 @@ class Str implements ICast
      */
     public function toArray()
     {
-        return [$this->activeText];
+        return [$this->activeValue];
     }
 
     /**
@@ -780,10 +778,10 @@ class Str implements ICast
      */
     public function toString()
     {
-        if (empty($this->activeText)) {
+        if (empty($this->activeValue)) {
             return '';
         }
-        return $this->activeText;
+        return $this->activeValue;
     }
 }
 

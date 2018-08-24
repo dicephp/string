@@ -19,15 +19,15 @@ class StrTest extends TestCase
         $this->assertSame(" Vaibhav Kaushal ", "" . $obj . "", "Automatic Casting failed");
         $this->assertSame("Vaibhav Kaushal", (string)$obj->trim(), "Trimming failed");
         $this->assertSame(15, $obj->length(), "Length after trimming failed");
-        $this->assertSame(' Vaibhav Kaushal ', $obj->reset()->activeText, "Reset failed");
-        $this->assertSame('Vaibhav Kaushal ', $obj->ltrim()->activeText, "ltrim failed");
-        $this->assertSame('Vaibhav Kaushal', $obj->rtrim()->activeText, "rtrim failed");
-        $this->assertSame('vAIBHAV kAUSHAL', $obj->toggleCase()->activeText, "toggleCase failed");
-        $this->assertSame('Vaibhav Kaushal', $obj->toggleCase()->activeText, "toggleCase 2 failed");
-        $this->assertSame('vaibhav kaushal', $obj->downCase()->activeText, "downcase failed");
-        $this->assertSame('VAIBHAV KAUSHAL', $obj->upCase()->activeText, "upCase failed");
+        $this->assertSame(' Vaibhav Kaushal ', $obj->reset()->activeValue, "Reset failed");
+        $this->assertSame('Vaibhav Kaushal ', $obj->ltrim()->activeValue, "ltrim failed");
+        $this->assertSame('Vaibhav Kaushal', $obj->rtrim()->activeValue, "rtrim failed");
+        $this->assertSame('vAIBHAV kAUSHAL', $obj->toggleCase()->activeValue, "toggleCase failed");
+        $this->assertSame('Vaibhav Kaushal', $obj->toggleCase()->activeValue, "toggleCase 2 failed");
+        $this->assertSame('vaibhav kaushal', $obj->downCase()->activeValue, "downcase failed");
+        $this->assertSame('VAIBHAV KAUSHAL', $obj->upCase()->activeValue, "upCase failed");
 
-        $this->assertSame('LAHSUAK VAHBIAV', $obj->reverse()->activeText, "reverse failed");
+        $this->assertSame('LAHSUAK VAHBIAV', $obj->reverse()->activeValue, "reverse failed");
 
         $obj->reset()->trim();
         $this->assertSame(true, $obj->startsWith('Vai'), "startsWith failed");
@@ -52,14 +52,14 @@ class StrTest extends TestCase
         $this->assertSame(false, $obj->isEqualTo('vaibhav kaushal'), "isEqualTo 2 failed");
 
         $obj->reset();
-        $this->assertSame(' Vaibhav Kaushal ', $obj->activeText, "reset failed");
-        $this->assertSame('vaibhav kaushal', $obj->reset()->trim()->upCase()->downCase()->activeText,
+        $this->assertSame(' Vaibhav Kaushal ', $obj->activeValue, "reset failed");
+        $this->assertSame('vaibhav kaushal', $obj->reset()->trim()->upCase()->downCase()->activeValue,
             "Chaining reset->trim->upcase->downcase failed");
 
-        $this->assertSame('Actually, Vaibhav Kaushal ', $obj->reset()->prepend('Actually,')->activeText,
+        $this->assertSame('Actually, Vaibhav Kaushal ', $obj->reset()->prepend('Actually,')->activeValue,
             "prepend failed");
         $this->assertSame('Actually, Vaibhav Kaushal is just another developer.',
-            $obj->append('is just another developer.')->activeText, "append failed");
+            $obj->append('is just another developer.')->activeValue, "append failed");
 
         $obj->reset()->trim();
         $this->assertSame('V', $obj->getFirstCharacter(), "getFirstCharacter failed");
@@ -67,25 +67,25 @@ class StrTest extends TestCase
 
         // =============== TEST Justifications ==============
         $obj->reset();
-        $this->assertSame(' Vaibhav Kaushal 12345678', $obj->lJust(25, '1234567890')->activeText, "lJust failed");
+        $this->assertSame(' Vaibhav Kaushal 12345678', $obj->lJust(25, '1234567890')->activeValue, "lJust failed");
         $obj->reset()->trim();
-        $this->assertSame('Vaibhav Kaushal1234567890', $obj->lJust(25, '1234567890')->activeText, "lJust run 2 failed");
+        $this->assertSame('Vaibhav Kaushal1234567890', $obj->lJust(25, '1234567890')->activeValue, "lJust run 2 failed");
         $obj->reset()->trim();
         $this->assertSame('Vaibhav Kaushal12345678901234567890123456789012345',
-            $obj->lJust(50, '1234567890')->activeText, "lJust run 3 failed");
+            $obj->lJust(50, '1234567890')->activeValue, "lJust run 3 failed");
         $obj->reset()->trim();
-        $this->assertSame('Vaibhav Kaushal                                   ', $obj->lJust(50, ' ')->activeText,
+        $this->assertSame('Vaibhav Kaushal                                   ', $obj->lJust(50, ' ')->activeValue,
             "lJust run 4 failed");
         // --------------------------------------------------
         $obj->reset();
-        $this->assertSame('12345678 Vaibhav Kaushal ', $obj->rJust(25, '1234567890')->activeText, "rJust failed");
+        $this->assertSame('12345678 Vaibhav Kaushal ', $obj->rJust(25, '1234567890')->activeValue, "rJust failed");
         $obj->reset()->trim();
-        $this->assertSame('1234567890Vaibhav Kaushal', $obj->rJust(25, '1234567890')->activeText, "rJust run 2 failed");
+        $this->assertSame('1234567890Vaibhav Kaushal', $obj->rJust(25, '1234567890')->activeValue, "rJust run 2 failed");
         $obj->reset()->trim();
         $this->assertSame('12345678901234567890123456789012345Vaibhav Kaushal',
-            $obj->rJust(50, '1234567890')->activeText, "rJust run 3 failed");
+            $obj->rJust(50, '1234567890')->activeValue, "rJust run 3 failed");
         $obj->reset()->trim();
-        $this->assertSame('                                   Vaibhav Kaushal', $obj->rJust(50, ' ')->activeText,
+        $this->assertSame('                                   Vaibhav Kaushal', $obj->rJust(50, ' ')->activeValue,
             "rJust run 4 failed");
 
         $obj->reset()->trim();
@@ -107,29 +107,29 @@ class StrTest extends TestCase
 
         // Base 64 (ENCODING)
         $obj = new Str('test string>');
-        $this->assertSame('dGVzdCBzdHJpbmc+', '' . $obj->base64Encode()->activeText . '', "base64Encode failed");
+        $this->assertSame('dGVzdCBzdHJpbmc+', '' . $obj->base64Encode()->activeValue . '', "base64Encode failed");
         $obj->reset();
-        $this->assertSame('dGVzdCBzdHJpbmc-', '' . $obj->base64Encode(true)->activeText . '', "base64Encode 2 failed");
+        $this->assertSame('dGVzdCBzdHJpbmc-', '' . $obj->base64Encode(true)->activeValue . '', "base64Encode 2 failed");
         $obj = new Str('test string?');
-        $this->assertSame('dGVzdCBzdHJpbmc/', '' . $obj->base64Encode(false)->activeText . '', "base64Encode 3 failed");
+        $this->assertSame('dGVzdCBzdHJpbmc/', '' . $obj->base64Encode(false)->activeValue . '', "base64Encode 3 failed");
         $obj->reset();
-        $this->assertSame('dGVzdCBzdHJpbmc_', '' . $obj->base64Encode(true)->activeText . '', "base64Encode 4 failed");
+        $this->assertSame('dGVzdCBzdHJpbmc_', '' . $obj->base64Encode(true)->activeValue . '', "base64Encode 4 failed");
         $obj = new Str('test string');
-        $this->assertSame('dGVzdCBzdHJpbmc=', '' . $obj->base64Encode(false)->activeText . '', "base64Encode 5 failed");
+        $this->assertSame('dGVzdCBzdHJpbmc=', '' . $obj->base64Encode(false)->activeValue . '', "base64Encode 5 failed");
         $obj->reset();
-        $this->assertSame('dGVzdCBzdHJpbmc', '' . $obj->base64Encode(true)->activeText . '', "base64Encode 6 failed");
+        $this->assertSame('dGVzdCBzdHJpbmc', '' . $obj->base64Encode(true)->activeValue . '', "base64Encode 6 failed");
 
         // wrapWith
         $obj = new Str('test string');
         $this->assertSame('"test string"', '' . $obj->wrapWith() . '', "wrapWith failed");
-        $this->assertSame('/"test string"/', $obj->wrapWith('/')->activeText, "wrapWith 2 failed");
-        $this->assertSame('[/"test string"/]', $obj->wrapWith('[', ']')->activeText, "wrapWith 3 failed");
+        $this->assertSame('/"test string"/', $obj->wrapWith('/')->activeValue, "wrapWith 2 failed");
+        $this->assertSame('[/"test string"/]', $obj->wrapWith('[', ']')->activeValue, "wrapWith 3 failed");
 
         // Slugification
         $obj = new Str(' test str_iïn&g ');
-        $this->assertSame('test-str_iing', $obj->toSlug()->activeText, "toSlug failed");
+        $this->assertSame('test-str_iing', $obj->toSlug()->activeValue, "toSlug failed");
         $obj->reset();
-        $this->assertSame('test-str_i', $obj->toSlug(10)->activeText, "toSlug 2 failed");
+        $this->assertSame('test-str_i', $obj->toSlug(10)->activeValue, "toSlug 2 failed");
 
         // empty or not
         $obj = new Str('test string');
@@ -139,9 +139,9 @@ class StrTest extends TestCase
 
         // Truncate
         $obj = new Str('test string');
-        $this->assertSame('test', $obj->truncate(4, false)->activeText, 'truncate failed');
+        $this->assertSame('test', $obj->truncate(4, false)->activeValue, 'truncate failed');
         $obj->reset();
-        $this->assertSame('test...', $obj->truncate(7)->activeText, 'truncate 2 failed');
+        $this->assertSame('test...', $obj->truncate(7)->activeValue, 'truncate 2 failed');
 
         // Included In
         $obj = new Str('test string');
