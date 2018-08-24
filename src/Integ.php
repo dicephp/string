@@ -52,36 +52,75 @@ class Integ
     }
 
     /**
-     * @return int Length of the string
+     * Returns the length of the integer's sting representation
+     * @return int Length of the Integer as string
      */
     public function length()
     {
         return strlen((string)$this->activeValue);
     }
 
+    /**
+     * Returns the float/decimal representation (usually, should append '.0' at the end)
+     *
+     * @return float
+     */
     public function toDecimal()
     {
         return $this->toFloat();
     }
 
+    /**
+     * Returns the double/decimal representation (usually, should append '.0' at the end)
+     *
+     * @return float
+     */
     public function toDouble()
     {
+        return (double)$this->activeValue;
     }
 
+    /**
+     *
+     */
     public function toRational()
     {
+        // TODO: Implement this method
     }
 
-    public function toHex()
+    /**
+     * Returns the hexadecimal representation of the integer
+     *
+     * @param bool $upperCaseHex Should the returned hexadecimal value have alphabetic characters in upper case?
+     * @return string
+     */
+    public function toHex($upperCaseHex = false)
     {
+        $val = dechex($this->activeValue);
+        if ($upperCaseHex) {
+            $val = strtoupper($val);
+        }
+        return $val;
     }
 
+    /**
+     * Returns the binary representation of the Integer
+     *
+     * @return string
+     */
     public function toBinary()
     {
+        return decbin($this->activeValue);
     }
 
+    /**
+     * Returns the octal representation of the Integer
+     *
+     * @return string
+     */
     public function toOctal()
     {
+        return decoct($this->activeValue);
     }
 
     public function digits()
