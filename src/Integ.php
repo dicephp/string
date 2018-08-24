@@ -61,6 +61,7 @@ class Integ
 
     public function toDecimal()
     {
+        return $this->toFloat();
     }
 
     public function toDouble()

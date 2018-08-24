@@ -16,6 +16,6 @@ class IntegTest extends TestCase
         $obj = new Integ(12345.6789);
         $this->assertSame(5, $obj->length(), "Integer Length failed");
 
-        $this->assertSame(5, $obj->length(), "Integer Length failed");
+        $this->assertSame(5.00, $obj->toDecimal(), "toDecimal failed");
     }
 }
