@@ -29,4 +29,10 @@ interface ICast
      */
     public function toArray();
 
+    /**
+     * Convert the value to a scalar string value
+     * @return string
+     */
+    public function toString();
+
 }

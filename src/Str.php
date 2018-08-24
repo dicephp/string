@@ -54,10 +54,7 @@ class Str implements ICast
      */
     public function __toString()
     {
-        if (empty($this->activeText)) {
-            return '';
-        }
-        return $this->activeText;
+        return $this->toString();
     }
 
     /**
@@ -775,6 +772,18 @@ class Str implements ICast
     public function toArray()
     {
         return [$this->activeText];
+    }
+
+    /**
+     * Convert the value to a scalar string value
+     * @return string
+     */
+    public function toString()
+    {
+        if (empty($this->activeText)) {
+            return '';
+        }
+        return $this->activeText;
     }
 }
 

@@ -11,7 +11,7 @@ class StrTest extends TestCase
     /**
      * Test all the methods in the Str class
      */
-    public function testMethods()
+    public function testStrMethods()
     {
         $obj = new Str(" Vaibhav Kaushal ");
         // =============== TEST Basics ==============
