@@ -125,6 +125,12 @@ class StrTest extends TestCase
         $this->assertSame('/"test string"/', $obj->wrapWith('/')->activeText, "wrapWith 2 failed");
         $this->assertSame('[/"test string"/]', $obj->wrapWith('[', ']')->activeText, "wrapWith 3 failed");
 
+        // Slugification
+        $obj = new Str(' test str_iïn&g ');
+        $this->assertSame('test-str_iing', $obj->toSlug()->activeText, "toSlug failed");
+        $obj->reset();
+        $this->assertSame('test-str_i', $obj->toSlug(10)->activeText, "toSlug 2 failed");
+
         // empty or not
         $obj = new Str('test string');
         $this->assertSame(false, $obj->isEmpty(), "empty failed");

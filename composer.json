@@ -21,7 +21,8 @@
   },
   "require": {
     "php": ">=7.0",
-    "ext-mbstring": "*"
+    "ext-mbstring": "*",
+    "danielstjules/stringy": "~3.1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^7",
