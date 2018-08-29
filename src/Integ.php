@@ -81,11 +81,16 @@ class Integ
     }
 
     /**
+     * Returns the rational representation of the integer.
+     * Just adds "/1" to the string representation
      *
+     * @return string
      */
     public function toRational()
     {
-        // TODO: Implement this method
+        $strObj = $this->toString();
+        $strObj->append('/1');
+        return $strObj->toString();
     }
 
     /**
@@ -123,8 +128,20 @@ class Integ
         return decoct($this->activeValue);
     }
 
+    /**
+     * Returns the scalar Integer values for each digit in the active value
+     *
+     * @return integer[]
+     */
     public function digits()
     {
+        $stringArray = str_split($this->activeValue);
+        $arrToReturn = [];
+        foreach ($stringArray as $value) {
+            $arrToReturn[] = (int)$value;
+        }
+
+        return $arrToReturn;
     }
 
     /**
@@ -173,11 +190,11 @@ class Integ
     }
 
     /**
-     * Convert the value to a scalar string value
-     * @return string
+     * Convert the value to a Str representation of the integer
+     * @return Str
      */
     public function toString()
     {
-        return (string)$this->activeValue;
+        return new Str($this->activeValue);
     }
 }

@@ -25,5 +25,8 @@ class IntegTest extends TestCase
 
         $this->assertSame('1100110001111001', $obj->toBinary(), "toBinary failed");
         $this->assertSame('146171', $obj->toOctal(), "toOctal failed");
+
+        $this->assertSame('52345/1', $obj->toRational(), "toRational failed");
+        $this->assertSame([5, 2, 3, 4, 5], $obj->digits(), "toRational failed");
     }
 }
