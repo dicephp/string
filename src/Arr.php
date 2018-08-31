@@ -211,7 +211,7 @@ class Arr implements \ArrayAccess
         } elseif (is_callable($this->activeValue) && get_class($this->activeValue) == 'Closure') {
             $this->strictTypeName = 'custom:closure';
         } elseif (is_callable($this->activeValue) && get_class($this->activeValue) == 'Closure') {
-            $this->strictTypeName = 'custom:closure';
+
         }
     }
 }
