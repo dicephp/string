@@ -65,6 +65,12 @@ class StrTest extends TestCase
         $this->assertSame('V', $obj->getFirstCharacter(), "getFirstCharacter failed");
         $this->assertSame('l', $obj->getLastCharacter(), "getFirstCharacter 2 failed");
 
+        $obj->reset()->trim();
+        $this->assertSame('Vxibhxv Kxushxl', $obj->replace('a', 'x')->activeValue, "replace failed");
+//        $obj->reset()->trim();
+        $this->assertSame('Vxibhxv Kxushxl', $obj->replace('a', 'x')->activeValue, "replace 2 failed");
+        $this->assertSame('Vxibhxv_Kxushxl', $obj->replace(' ', '_')->activeValue, "replace 3 failed");
+
         // =============== TEST Justifications ==============
         $obj->reset();
         $this->assertSame(' Vaibhav Kaushal 12345678', $obj->lJust(25, '1234567890')->activeValue, "lJust failed");

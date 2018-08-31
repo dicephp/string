@@ -403,16 +403,17 @@ class Str implements ICast
         return '';
     }
 
-    public function partition()
-    {
-    }
-
-    public function slice()
-    {
-    }
-
-    public function squeeze()
-    {
+    /**
+     * Searches for the `searchFor` string and replaces all occurences with `replaceWith` string
+     * Uses str_replace in the background
+     *
+     * @param string|static $searchFor String to search for
+     * @param string|static $replaceWith String to replace the searched occurrences with
+     * @return Str
+     */
+    public function replace($searchFor, $replaceWith) {
+        $this->activeValue = str_replace((string)$searchFor, (string)$replaceWith, $this->activeValue);
+        return $this;
     }
 
     /**
