@@ -785,4 +785,3 @@ class Str implements ICast
         return $this->activeValue;
     }
 }
-

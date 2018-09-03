@@ -150,7 +150,7 @@ class Rational implements ICast
                 // Count the number of digits after decimal
                 $decSplit = explode('.', (string)$decPart);
 
-                $currDenominator = $decSplit[1];
+                $currDenominator = $decSplit[1] ?? 0;
 
                 if ((int)$currDenominator == 0) {
                     // Protect from division by zero
@@ -185,18 +185,24 @@ class Rational implements ICast
         $cfArray = array_reverse($cf['continued_fraction']);
 
         if (!empty($cfArray)) {
-            $last_fraction = [];
 
-            for ($i = 0; $i < (count($cfArray) - 1); $i++) {
-                $resultingFraction = self::addFractions($cfArray[$i], [$cfArray[$i + 1][1], 1]);
-                $cfArray[$i + 1] = [$resultingFraction[1], $resultingFraction[0]];
-                $last_fraction = [$resultingFraction[1], $resultingFraction[0]];
+            if (count($cfArray) > 1) {
+                $last_fraction = [];
+
+                for ($i = 0; $i < (count($cfArray) - 1); $i++) {
+                    $resultingFraction = self::addFractions($cfArray[$i], [$cfArray[$i + 1][1], 1]);
+                    $cfArray[$i + 1] = [$resultingFraction[1], $resultingFraction[0]];
+                    $last_fraction = [$resultingFraction[1], $resultingFraction[0]];
+                }
+
+                $resultingFraction = self::addFractions($last_fraction, [$cf['integer'], 1]);
+            } else {
+                $resultingFraction = self::addFractions($cfArray[0], [$cf['integer'], 1]);
             }
-
-            $resultingFraction = self::addFractions($last_fraction, [$cf['integer'], 1]);
 
             $this->numerator = (int)($this->continuedFraction['sign'] . $resultingFraction[0]);
             $this->denominator = $resultingFraction[1];
+
         } else {
             // Continued Fractions array is empty. So it was an integer!
             $this->numerator = (int)($this->continuedFraction['sign'] . $this->continuedFraction['integer']);

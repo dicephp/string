@@ -9,7 +9,7 @@ use Dice\Types\Rational;
 class RationalTest extends TestCase
 {
     /**
-     * Test all the methods in the Str class
+     * Test all the methods in the Rational class
      */
     public function testRationalMethods()
     {
@@ -27,9 +27,12 @@ class RationalTest extends TestCase
         $this->assertSame('2345/4395', $obj->toString(), "toString failed");
         $this->assertSame('0.53356086461889', (string)$obj->toFloat(), "toFloat for less than 0 failed");
 
-
         $obj = Rational::fromFloat($obj->toFloat());
         $this->assertSame(0.5335608646188851, $obj->toFloat(), "toFloat reconversion failed");
         $this->assertSame('469/879', $obj->toString(), "toFloat reconversion 2 failed");
+
+        $obj = Rational::fromFloat(4.02);
+        $this->assertSame('2345/4395', $obj->toString(), "toString failed");
+        $this->assertSame('0.53356086461889', (string)$obj->toFloat(), "toFloat for less than 0 failed");
     }
 }
