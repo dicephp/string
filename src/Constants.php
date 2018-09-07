@@ -8,9 +8,19 @@ namespace Dice\Types;
 abstract class Constants {
     /* Constants for Data types */
 
-    const Array = 'Arr';
+    // PHP Built-In
     const Integer = 'Integ';
+    const Float = 'Flt';
     const String = 'Str';
+    const Bool = 'Bln';
+
+    const Array = 'Arr';
+    const Object = 'Obj';
+    const Resource = 'Rsc';
+
+    // The following types are listed only for the sake of consistency in detecting types
+    const TypeCallable = 'callable';
+    const TypeClosure = 'closure';
 
     /**
      * Constants constructor.

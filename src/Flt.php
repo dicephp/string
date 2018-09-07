@@ -8,7 +8,7 @@ namespace Dice\Types;
  * @property-read string activeValue Returns the active value of the object
  * @property-read string originalValue The original value with which the object was created
  */
-class Flt
+class Flt implements ICast
 {
     /**
      * @var int Original value with which the class was created
@@ -91,41 +91,6 @@ class Flt
         $strObj = $this->toString();
         $strObj->append('/1');
         return $strObj->toString();
-    }
-
-    /**
-     * Returns the hexadecimal representation of the integer
-     *
-     * @param bool $upperCaseHex Should the returned hexadecimal value have alphabetic characters in upper case?
-     * @return string
-     */
-    public function toHex($upperCaseHex = false)
-    {
-        $val = dechex($this->activeValue);
-        if ($upperCaseHex) {
-            $val = strtoupper($val);
-        }
-        return $val;
-    }
-
-    /**
-     * Returns the binary representation of the Integer
-     *
-     * @return string
-     */
-    public function toBinary()
-    {
-        return decbin($this->activeValue);
-    }
-
-    /**
-     * Returns the octal representation of the Integer
-     *
-     * @return string
-     */
-    public function toOctal()
-    {
-        return decoct($this->activeValue);
     }
 
     /**
