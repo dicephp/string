@@ -27,5 +27,5 @@ var_dump($arr);
 //*/
 
 $flt = new \Dice\Types\Flt(2.4);
-
+echo $flt->toRational();
 var_dump($flt->digits());

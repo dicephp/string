@@ -81,16 +81,14 @@ class Flt implements ICast
     }
 
     /**
-     * Returns the rational representation of the integer.
-     * Just adds "/1" to the string representation
+     * Returns the rational representation of the float.
      *
      * @return string
      */
     public function toRational()
     {
-        $strObj = $this->toString();
-        $strObj->append('/1');
-        return $strObj->toString();
+        $rat = Rational::fromFloat($this->activeValue);
+        return $rat->toString();
     }
 
     /**
