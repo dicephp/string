@@ -1,14 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vaibhav
- * Date: 26/07/18
- * Time: 8:14 PM
- */
 
 namespace Dice\Types;
 
-
+/**
+ * Interface ICast: Types should implement this. The signature is not final but might just stay
+ * @package Dice\Types
+ */
 interface ICast
 {
     /**

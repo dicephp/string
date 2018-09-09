@@ -8,18 +8,15 @@ namespace Dice\Types;
 class Rational implements ICast
 {
     // Safe values by default
-    /**
-     * @var int The Numerator of the rational number
-     */
+    /** @var int The Numerator of the rational number */
     protected $numerator = 1;
-    /**
-     * @var int The Denominator of the rational number
-     */
+
+    /** @var int The Denominator of the rational number */
     protected $denominator = 1;
-    /**
-     * @var float The float value to which this rational number corresponds
-     */
+
+    /** @var float The float value to which this rational number corresponds */
     protected $floatValue = 1.0;
+
     /**
      * Continued Fraction (https://en.wikipedia.org/wiki/Continued_fraction) of the float value
      *

@@ -3,7 +3,7 @@
 namespace Dice\Types;
 
 /**
- * Flt: A near-natural Ruby-like Float/Double Implementation
+ * Flt: A near-natural Float/Double Implementation
  *
  * @property-read string activeValue Returns the active value of the object
  * @property-read string originalValue The original value with which the object was created

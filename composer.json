@@ -1,7 +1,7 @@
 {
   "name": "dice/types",
   "version": "1.0-BETA",
-  "description": "Near natural implementation of PHP built-in types. Inspired by Ruby.",
+  "description": "Near natural implementation of PHP built-in types",
   "keywords": [
     "String",
     "Array",

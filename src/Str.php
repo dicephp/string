@@ -3,27 +3,20 @@
 namespace Dice\Types;
 
 /**
- * Str: A near-natural Ruby-like String Implementation
+ * Str: A near-natural String Implementation
  *
  * @property-read string activeValue Returns the active string of the object
  * @property-read string originalValue The original string with which the object was created
  */
 class Str implements ICast
 {
-    /**
-     * @var String Original text with which the class was created
-     */
+    /** @var String Original text with which the class was created */
     protected $originalText;
 
-    /**
-     * @var String Active value, used for chaining
-     */
+    /** @var String Active value, used for chaining */
     protected $activeValue;
 
-    /**
-     * Encoding of the string. Assume that it is UTF-8
-     * @var string
-     */
+    /** @var string Encoding of the string. Assume that it is UTF-8 */
     protected $encoding = 'UTF-8';
 
     /**
@@ -540,7 +533,8 @@ class Str implements ICast
     /**
      * Converts the string to slugged version
      *
-     * @param int $intMaxLength Max length of the resulting slug (default: 65000). Since slugs are normally used in web URLs, we limit it to 65000 by default, leaving space for other stuff (domain name, protocol name, path and hash). If you want to get the entire string, use (\mb_strlen($strString)) as the parameter value when calling the method
+     * @param int $intMaxLength Max length of the resulting slug (default: 65000).
+     * Since slugs are normally used in web URLs, we limit it to 65000 by default, leaving space for other stuff (domain name, protocol name, path and hash). If you want to get the entire string, use (\mb_strlen($strString)) as the parameter value when calling the method
      *
      * @return Str
      */

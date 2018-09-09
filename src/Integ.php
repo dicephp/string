@@ -3,22 +3,17 @@
 namespace Dice\Types;
 
 /**
- * Integ: A near-natural Ruby-like Integer Implementation
- *
+ * Integ: A near-natural Integer Implementation
  *
  * @property-read string activeValue Returns the active value of the object
  * @property-read string originalValue The original value with which the object was created
  */
 class Integ
 {
-    /**
-     * @var int Original value with which the class was created
-     */
+    /** @var int Original value with which the class was created */
     protected $originalValue;
 
-    /**
-     * @var int Active value, used for chaining
-     */
+    /** @var int Active value, used for chaining */
     protected $activeValue;
 
     /**

@@ -3,41 +3,27 @@
 namespace Dice\Types;
 
 /**
- * Arr: A near-natural Ruby-like Array Implementation
+ * Arr: A near-natural Array Implementation
  */
-class Arr
-    extends \ArrayIterator
-//    implements \ArrayAccess , \SeekableIterator , \Countable , \Serializable
+class Arr extends \ArrayIterator
 {
-    /**
-     * @var array Original value with which the class was created
-     */
+    /** @var array Original value with which the class was created */
     protected $originalValue;
 
-    /**
-     * @var int Active value, used for chaining
-     */
+    /** @var int Active value, used for chaining */
     protected $activeValue;
 
-    /**
-     * @var bool Should all elements in the array be of the same type?
-     */
+    /** @var bool Should all elements in the array be of the same type? */
     protected $isStrict = false;
 
-    /**
-     * @var string If the strict mode is set to true, then this string contains the type!
-     */
+    /** @var string If the strict mode is set to true, then this string contains the type! */
     protected $strictTypeName = 'builtIn:string';
 
-    /**
-     * @var mixed Return this value when an offset is not found
-     */
+    /** @var mixed Return this value when an offset is not found */
     protected $returnValueOnKeyNotFound = null;
 
     // ========== PROPERTIES FOR INTERFACES ==========
-    /**
-     * @var int Internal position for Seekable interface
-     */
+    /** @var int Internal position for Seekable interface */
     private $position;
 
     /**

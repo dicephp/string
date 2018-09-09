@@ -5,6 +5,10 @@
 
 namespace Dice\Types;
 
+/**
+ * Class Constants
+ * @package Dice\Types
+ */
 abstract class Constants {
     /* Constants for Data types */
 
