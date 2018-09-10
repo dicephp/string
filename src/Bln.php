@@ -120,11 +120,19 @@ class Bln implements ICast
     /**
      * String representation of the object
      *
+     * NOTE: Since empty string is considered false, we return empty string for false case
+     * NOTE: Integer 1 can be considered true and since the string '1' can be casted
+     *         to Integer easily, we return that for truth case
+     *
      * @return String returns the active text
      */
     public function __toString()
     {
-        return (string)$this->activeValue;
+        if($this->activeValue) {
+            return '1';
+        } else {
+            return '';
+        }
     }
 
     /**
