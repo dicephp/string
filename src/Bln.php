@@ -5,8 +5,8 @@ namespace Dice\Types;
 /**
  * Bln: A near-natural Boolean Implementation
  *
- * @property-read string activeValue Returns the active value of the object
- * @property-read string originalValue The original value with which the object was created
+ * @property-read bool activeValue Returns the active value of the object
+ * @property-read mixed originalValue The original value with which the object was created
  */
 class Bln implements ICast
 {
@@ -17,10 +17,10 @@ class Bln implements ICast
     protected $activeValue;
 
     /** @var array The list of values that can be considered true */
-    protected $trueValues = [true, 1, 't', 'true' ];
+    protected $trueValues = [true, 1, 't', 'true', 'yes'];
 
     /** @var array The list of values that can be considered true false */
-    protected $falseValues = [false, 0, 'f', 'false' ];
+    protected $falseValues = [false, 0, 'f', 'false', 'no'];
 
     /** @var integer How should this boolean represent the value */
     protected $representation;
@@ -33,6 +33,7 @@ class Bln implements ICast
     const ONE_ZERO_INTEGER = 1;
     const T_F_STRING = 2;
     const TRUE_FALSE_STRING = 3;
+    const YES_NO_STRING = 4;
 
     /**
      * Bln constructor
@@ -46,7 +47,7 @@ class Bln implements ICast
      */
     public function __construct($origValue, $representation = 0, $sqlMode = false, $trueValues = [], $falseValues = [])
     {
-        if(!$sqlMode && $origValue === null) {
+        if (!$sqlMode && $origValue === null) {
             throw new \Exception('Cannot create a Bln object with null value and sqlMode set to false');
         }
 
@@ -55,29 +56,44 @@ class Bln implements ICast
 
             // Compound values cannot be used for truthy and falsy values
             foreach ($trueValues as $trueValue) {
-                if(is_array($trueValue)) {
+                if (is_array($trueValue)) {
                     throw new \Exception('Array found inside $trueValues. Compound types not allowed in $trueValues.');
                 }
-                if(is_object($trueValue)){
+                if (is_object($trueValue)) {
                     throw new \Exception('Object found inside $trueValues. Compound types not allowed in $trueValues.');
                 }
             }
 
             foreach ($falseValues as $falseValue) {
-                if(is_array($falseValue)) {
+                if (is_array($falseValue)) {
                     throw new \Exception('Array found inside $falseValues. Compound types not allowed in $falseValues.');
                 }
-                if(is_object($falseValue)){
+                if (is_object($falseValue)) {
                     throw new \Exception('Object found inside $falseValues. Compound types not allowed in $falseValues.');
                 }
             }
 
             $trueValues = array_unique($trueValues);
+            $trueValues = array_map(function ($value) {
+                if (is_string($value)) {
+                    return strtolower($value);
+                }
+                return $value;
+            }, $trueValues);
+
             $falseValues = array_unique($falseValues);
-            $intersection = array_intersect($trueValues,$falseValues);
+            $falseValues = array_map(function ($value) {
+                if (is_string($value)) {
+                    return strtolower($value);
+                }
+                return $value;
+            }, $falseValues);
+
+            $intersection = array_intersect($trueValues, $falseValues);
 
             if (count($intersection) > 0) {
-                throw new \Exception('Same values found in both $trueValues and $falseValues: ' . implode(',', $intersection));
+                throw new \Exception('Same values found in both $trueValues and $falseValues: ' . implode(',',
+                        $intersection));
             }
 
             $this->trueValues = array_merge($this->trueValues, $trueValues);
@@ -89,7 +105,7 @@ class Bln implements ICast
         $this->originalValue = $origValue;
         $this->activeValue = $this->castFromValues($origValue);
 
-        if($this->activeValue === null) {
+        if ($this->activeValue === null) {
             throw new \Exception(
                 "Cannot determine truthiness or falsiness of the value.\nPlease check input and $trueValues and $falseValues supplied."
             );
@@ -128,7 +144,7 @@ class Bln implements ICast
      */
     public function __toString()
     {
-        if($this->activeValue) {
+        if ($this->activeValue) {
             return '1';
         } else {
             return '';
@@ -199,6 +215,48 @@ class Bln implements ICast
     }
 
     /**
+     * @return bool
+     */
+    public function toBoolean()
+    {
+        return $this->activeValue;
+    }
+
+    /**
+     * Returns 'true', 'false', 1, 0, 'yes', 'no' etc. from a boolean value
+     *
+     * @param mixed $val
+     * @param integer $mode
+     * @return mixed
+     *
+     * @throws \Exception
+     */
+    public static function getValueFromBoolean($val, $mode)
+    {
+        if(array_search($mode, [
+            self::TRUE_FALSE_BOOLEAN,
+            self::ONE_ZERO_INTEGER,
+            self::T_F_STRING,
+            self::TRUE_FALSE_STRING,
+            self::YES_NO_STRING
+        ]) === false) {
+            throw new \Exception('Mode must be one of the pre-built types');
+        }
+
+        $bln = new static($val);
+        $result = $bln->castFromValues($val);
+
+        if($result !== null) {
+            if($result) {
+                // True
+                return $bln->trueValues[$mode];
+            } else {
+                return $bln->falseValues[$mode];
+            }
+        }
+    }
+
+    /**
      * Returns the boolean cast of the value supplied. Returns null when it cannot determine.
      *
      * @param mixed $val Value to check
@@ -206,12 +264,16 @@ class Bln implements ICast
      */
     protected function castFromValues($val)
     {
-        if(array_search($val, $this->trueValues, true) !== false) {
+        if (is_string($val)) {
+            $val = strtolower($val);
+        }
+
+        if (array_search($val, $this->trueValues, true) !== false) {
             // Value found in the trueValues array!
             return true;
         }
 
-        if(array_search($val, $this->falseValues, true) !== false) {
+        if (array_search($val, $this->falseValues, true) !== false) {
             // Value found in the falseValues array!
             return false;
         }
